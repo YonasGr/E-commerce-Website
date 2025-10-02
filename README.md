@@ -92,9 +92,8 @@ Visit [http://localhost:3000](http://localhost:3000) in your browser.
 ## 👤 Author
 
 **Yonas Gr**  
-[GitHub Profile](https://github.com/YonasGr)  
-[LinkedIn](https://www.linkedin.com/in/your-linkedin/)  
-Email: youremail@example.com
+[GitHub Profile](https://github.com/YonasGr)   
+Email: yonasgirma222@gmail.com
 
 ---
 
