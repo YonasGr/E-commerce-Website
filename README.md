@@ -94,6 +94,7 @@ Visit [http://localhost:3000](http://localhost:3000) in your browser.
 **Yonas Gr**  
 [GitHub Profile](https://github.com/YonasGr)   
 Email: yonasgirma222@gmail.com
+Telegram: https://t.me/x_Jonah
 
 ---
 
