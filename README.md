@@ -21,7 +21,7 @@
 
 ## 🌟 Overview
 
-**Yona** is a cutting-edge e-commerce platform built with modern web technologies, designed to showcase and sell premium accessories including watches, sunglasses, and fashion items. The application features a clean, minimalist design with smooth animations, an intuitive shopping experience, and full dark mode support.
+**Yona** is a cutting-edge e-commerce platform built with modern web technologies, designed to showcase and sell premium accessories including watches, sunglasses, and fashion items. The application focuses on user experience, speed, and maintainability.
 
 ### ✨ Key Highlights
 
@@ -178,38 +178,6 @@ See [design_guidelines.md](./design_guidelines.md) for complete design documenta
 
 ---
 
-## 🚧 Roadmap
-
-### Phase 1: Core Features (Current)
-- ✅ Homepage with hero section
-- ✅ Product catalog and cards
-- ✅ Shopping cart functionality
-- ✅ Category browsing
-- ✅ Dark mode support
-- ✅ Responsive design
-
-### Phase 2: Enhanced Shopping (Next)
-- [ ] Product detail pages
-- [ ] Advanced filtering and sorting
-- [ ] Product search with autocomplete
-- [ ] User reviews and ratings
-- [ ] Wishlist persistence
-- [ ] Product variants (sizes, colors)
-
-### Phase 3: User Accounts
-- [ ] User authentication
-- [ ] Order history
-- [ ] Saved addresses
-- [ ] Profile management
-
-### Phase 4: Checkout & Payments
-- [ ] Multi-step checkout flow
-- [ ] Stripe payment integration
-- [ ] Order confirmation emails
-- [ ] Invoice generation
-
----
-
 ## 🤝 Contributing
 
 Contributions are welcome! Please follow these steps:
@@ -262,7 +230,7 @@ If you encounter any issues or have questions:
 
 - 📧 Email: yonasgirma222@gmail.com
 - 💬 Telegram: [@x_Jonah](https://t.me/x_Jonah)
-- 🐛 GitHub Issues: [Report a bug](https://github.com/YonasGr/E-commerce-Website/issues)
+- 🪲 GitHub Issues: [Report a bug](https://github.com/YonasGr/E-commerce-Website/issues)
 
 ---
 
