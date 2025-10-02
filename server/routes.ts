@@ -1,14 +1,15 @@
 import type { Express, Response } from "express";
 import type { Request } from "express-serve-static-core";
+import type { Session } from "express-session";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertCartItemSchema } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 interface SessionRequest extends Request {
-  session?: {
+  session: Session & {
     cartId?: string;
-  } & Express.Session;
+  };
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {

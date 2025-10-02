@@ -40,28 +40,28 @@ export default function Header({ cartItemCount = 0, onCartClick, onSearchClick }
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6 flex-1 justify-center">
             <a
-              href="#"
+              href="\shop"
               className="text-sm font-medium hover-elevate px-3 py-2 rounded-md transition-colors"
               data-testid="link-shop"
             >
               Shop
             </a>
             <a
-              href="#"
+              href="\collections"
               className="text-sm font-medium hover-elevate px-3 py-2 rounded-md transition-colors"
               data-testid="link-collections"
             >
               Collections
             </a>
             <a
-              href="#"
+              href="\about"
               className="text-sm font-medium hover-elevate px-3 py-2 rounded-md transition-colors"
               data-testid="link-about"
             >
               About
             </a>
             <a
-              href="#"
+              href="\contact"
               className="text-sm font-medium hover-elevate px-3 py-2 rounded-md transition-colors"
               data-testid="link-contact"
             >
@@ -137,28 +137,28 @@ export default function Header({ cartItemCount = 0, onCartClick, onSearchClick }
           <nav className="md:hidden py-4 border-t" data-testid="nav-mobile-menu">
             <div className="flex flex-col gap-2">
               <a
-                href="#"
+                href="\shop"
                 className="text-sm font-medium hover-elevate px-3 py-2 rounded-md"
                 data-testid="link-shop-mobile"
               >
                 Shop
               </a>
               <a
-                href="#"
+                href="\collections"
                 className="text-sm font-medium hover-elevate px-3 py-2 rounded-md"
                 data-testid="link-collections-mobile"
               >
                 Collections
               </a>
               <a
-                href="#"
+                href="\about"
                 className="text-sm font-medium hover-elevate px-3 py-2 rounded-md"
                 data-testid="link-about-mobile"
               >
                 About
               </a>
               <a
-                href="#"
+                href="\contact"
                 className="text-sm font-medium hover-elevate px-3 py-2 rounded-md"
                 data-testid="link-contact-mobile"
               >
