@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import ProductCard, { type Product } from "@/components/ProductCard";
@@ -6,115 +7,71 @@ import CategoryCard from "@/components/CategoryCard";
 import BenefitsSection from "@/components/BenefitsSection";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
-
-// Import images
-import watch1 from "@assets/stock_images/premium_watch_closeu_4714ba80.jpg";
-import watch2 from "@assets/stock_images/premium_watch_closeu_04060ace.jpg";
-import watch3 from "@assets/stock_images/premium_watch_closeu_fc0cb07d.jpg";
-import watch4 from "@assets/stock_images/premium_watch_closeu_ef285bc2.jpg";
-import accessory1 from "@assets/stock_images/minimalist_accessori_6ac54b01.jpg";
-import accessory2 from "@assets/stock_images/minimalist_accessori_bb498747.jpg";
-import accessory3 from "@assets/stock_images/minimalist_accessori_52360f41.jpg";
-import accessory4 from "@assets/stock_images/minimalist_accessori_75db2cec.jpg";
-import sunglasses1 from "@assets/stock_images/modern_sunglasses_pr_e1ce36cc.jpg";
-import sunglasses2 from "@assets/stock_images/modern_sunglasses_pr_7da6e494.jpg";
-import sunglasses3 from "@assets/stock_images/modern_sunglasses_pr_44b7d134.jpg";
-
-//todo: remove mock functionality
-const mockProducts: Product[] = [
-  {
-    id: "1",
-    name: "Classic Chronograph Watch",
-    price: 299,
-    image: watch1,
-    category: "Watches",
-    rating: 4.8,
-    isNew: true,
-  },
-  {
-    id: "2",
-    name: "Minimalist Leather Watch",
-    price: 249,
-    image: watch2,
-    category: "Watches",
-    rating: 4.9,
-  },
-  {
-    id: "3",
-    name: "Sport Chronograph",
-    price: 349,
-    image: watch3,
-    category: "Watches",
-    rating: 4.7,
-    isNew: true,
-  },
-  {
-    id: "4",
-    name: "Elegant Dress Watch",
-    price: 399,
-    image: watch4,
-    category: "Watches",
-    rating: 4.9,
-  },
-  {
-    id: "5",
-    name: "Aviator Sunglasses",
-    price: 149,
-    image: sunglasses1,
-    category: "Sunglasses",
-    rating: 4.6,
-  },
-  {
-    id: "6",
-    name: "Classic Wayfarers",
-    price: 129,
-    image: sunglasses2,
-    category: "Sunglasses",
-    rating: 4.7,
-  },
-  {
-    id: "7",
-    name: "Modern Round Frames",
-    price: 159,
-    image: sunglasses3,
-    category: "Sunglasses",
-    rating: 4.5,
-    isNew: true,
-  },
-  {
-    id: "8",
-    name: "Leather Wallet",
-    price: 89,
-    image: accessory1,
-    category: "Accessories",
-    rating: 4.8,
-  },
-];
+import { apiRequest } from "@/lib/queryClient";
+import type { Product as ApiProduct, Category } from "@shared/schema";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Home() {
   const [cartOpen, setCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState<Array<{
-    id: string;
-    name: string;
-    price: number;
-    quantity: number;
-    image: string;
-  }>>([]);
+  const { toast } = useToast();
 
-  const handleAddToCart = (product: Product) => {
-    setCartItems(prev => {
-      const existing = prev.find(item => item.id === product.id);
-      if (existing) {
-        return prev.map(item =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      }
-      return [...prev, { ...product, quantity: 1 }];
-    });
-    setCartOpen(true);
+  const { data: products = [], isLoading: productsLoading } = useQuery<ApiProduct[]>({
+    queryKey: ["/api/products"],
+  });
+
+  const { data: categories = [] } = useQuery<Category[]>({
+    queryKey: ["/api/categories"],
+  });
+
+  const { data: cartItems = [], refetch: refetchCart } = useQuery<Array<{
+    id: string;
+    productId: string;
+    quantity: number;
+    product: ApiProduct;
+  }>>({
+    queryKey: ["/api/cart"],
+  });
+
+  const handleAddToCart = async (product: Product) => {
+    try {
+      await apiRequest("POST", "/api/cart", {
+        productId: product.id,
+        quantity: 1,
+      });
+      
+      await refetchCart();
+      setCartOpen(true);
+      
+      toast({
+        title: "Added to cart",
+        description: `${product.name} has been added to your cart.`,
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to add item to cart. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
+
+  const convertedProducts: Product[] = products.map(p => ({
+    id: p.id,
+    name: p.name,
+    price: parseFloat(p.price),
+    image: p.image,
+    category: p.category,
+    rating: p.rating ? parseFloat(p.rating) : undefined,
+    isNew: p.isNew ?? false,
+  }));
+
+  const convertedCartItems = cartItems.map(item => ({
+    id: item.id,
+    name: item.product.name,
+    price: parseFloat(item.product.price),
+    quantity: item.quantity,
+    image: item.product.image,
+  }));
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -138,15 +95,23 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {mockProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  onAddToCart={handleAddToCart}
-                />
-              ))}
-            </div>
+            {productsLoading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {[...Array(8)].map((_, i) => (
+                  <div key={i} className="h-96 bg-muted animate-pulse rounded-lg" />
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {convertedProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    onAddToCart={handleAddToCart}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </section>
 
@@ -163,9 +128,14 @@ export default function Home() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <CategoryCard name="Watches" image={watch1} productCount={42} />
-              <CategoryCard name="Sunglasses" image={sunglasses1} productCount={28} />
-              <CategoryCard name="Accessories" image={accessory2} productCount={36} />
+              {categories.map((category) => (
+                <CategoryCard
+                  key={category.id}
+                  name={category.name}
+                  image={category.image}
+                  productCount={category.productCount ?? undefined}
+                />
+              ))}
             </div>
           </div>
         </section>
@@ -190,7 +160,8 @@ export default function Home() {
       <CartDrawer
         isOpen={cartOpen}
         onClose={() => setCartOpen(false)}
-        items={cartItems}
+        items={convertedCartItems}
+        onRefetch={refetchCart}
       />
     </div>
   );

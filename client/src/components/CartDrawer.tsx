@@ -1,7 +1,8 @@
 import { X, Plus, Minus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 interface CartItem {
   id: string;
@@ -15,27 +16,43 @@ interface CartDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   items?: CartItem[];
+  onRefetch?: () => void;
 }
 
-export default function CartDrawer({ isOpen, onClose, items = [] }: CartDrawerProps) {
-  const [cartItems, setCartItems] = useState<CartItem[]>(items);
+export default function CartDrawer({ isOpen, onClose, items = [], onRefetch }: CartDrawerProps) {
+  const { toast } = useToast();
 
-  const updateQuantity = (id: string, change: number) => {
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + change) }
-          : item
-      )
-    );
+  const updateQuantity = async (id: string, newQuantity: number) => {
+    try {
+      await apiRequest("PATCH", `/api/cart/${id}`, { quantity: newQuantity });
+      onRefetch?.();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to update quantity.",
+        variant: "destructive",
+      });
+    }
   };
 
-  const removeItem = (id: string) => {
-    setCartItems(items => items.filter(item => item.id !== id));
-    console.log(`Removed item ${id} from cart`);
+  const removeItem = async (id: string) => {
+    try {
+      await apiRequest("DELETE", `/api/cart/${id}`);
+      onRefetch?.();
+      toast({
+        title: "Removed from cart",
+        description: "Item has been removed from your cart.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to remove item.",
+        variant: "destructive",
+      });
+    }
   };
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   if (!isOpen) return null;
 
@@ -70,7 +87,7 @@ export default function CartDrawer({ isOpen, onClose, items = [] }: CartDrawerPr
 
         {/* Items */}
         <div className="flex-1 overflow-y-auto p-6">
-          {cartItems.length === 0 ? (
+          {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-center">
               <p className="text-lg text-muted-foreground mb-4" data-testid="text-empty-cart">
                 Your cart is empty
@@ -81,7 +98,7 @@ export default function CartDrawer({ isOpen, onClose, items = [] }: CartDrawerPr
             </div>
           ) : (
             <div className="space-y-4">
-              {cartItems.map((item) => (
+              {items.map((item) => (
                 <div
                   key={item.id}
                   className="flex gap-4 p-4 rounded-lg border hover-elevate"
@@ -105,7 +122,8 @@ export default function CartDrawer({ isOpen, onClose, items = [] }: CartDrawerPr
                         variant="outline"
                         size="icon"
                         className="h-7 w-7"
-                        onClick={() => updateQuantity(item.id, -1)}
+                        onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                        disabled={item.quantity <= 1}
                         data-testid={`button-decrease-${item.id}`}
                       >
                         <Minus className="h-3 w-3" />
@@ -117,7 +135,7 @@ export default function CartDrawer({ isOpen, onClose, items = [] }: CartDrawerPr
                         variant="outline"
                         size="icon"
                         className="h-7 w-7"
-                        onClick={() => updateQuantity(item.id, 1)}
+                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
                         data-testid={`button-increase-${item.id}`}
                       >
                         <Plus className="h-3 w-3" />
@@ -139,7 +157,7 @@ export default function CartDrawer({ isOpen, onClose, items = [] }: CartDrawerPr
         </div>
 
         {/* Footer */}
-        {cartItems.length > 0 && (
+        {items.length > 0 && (
           <div className="border-t p-6 space-y-4">
             <div className="flex justify-between text-lg font-semibold">
               <span data-testid="text-subtotal-label">Subtotal</span>
