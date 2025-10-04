@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
 import heroImage from "@assets/stock_images/modern_fashion_lifes_462e2441.jpg";
+import { useLocation } from "wouter";
 
 export default function Hero() {
+  const [, setLocation] = useLocation();
   return (
     <section className="relative w-full h-[85vh] min-h-[500px] overflow-hidden">
       {/* Background Image */}
@@ -37,7 +39,7 @@ export default function Hero() {
               data-testid="button-shop-now"
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90 border border-primary-border text-base px-8"
-              onClick={() => console.log("Shop Now clicked")}
+              onClick={() => setLocation("/shop")}
             >
               Shop Now
             </Button>
@@ -46,7 +48,7 @@ export default function Hero() {
               size="lg"
               variant="outline"
               className="text-base px-8 bg-background/10 backdrop-blur-md border-white/20 text-white hover:bg-background/20"
-              onClick={() => console.log("View Collection clicked")}
+              onClick={() => setLocation("/collections")}
             >
               View Collection
             </Button>

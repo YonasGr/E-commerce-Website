@@ -10,10 +10,12 @@ import CartDrawer from "@/components/CartDrawer";
 import { apiRequest } from "@/lib/queryClient";
 import type { Product as ApiProduct, Category } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
+import { useLocation } from "wouter";
 
 export default function Home() {
   const [cartOpen, setCartOpen] = useState(false);
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
 
   const { data: products = [], isLoading: productsLoading } = useQuery<ApiProduct[]>({
     queryKey: ["/api/products"],
@@ -134,6 +136,7 @@ export default function Home() {
                   name={category.name}
                   image={category.image}
                   productCount={category.productCount ?? undefined}
+                  onClick={() => setLocation(`/shop?category=${encodeURIComponent(category.name)}`)}
                 />
               ))}
             </div>

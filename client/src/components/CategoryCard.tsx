@@ -11,10 +11,7 @@ export default function CategoryCard({ name, image, productCount, onClick }: Cat
   return (
     <Card
       className="group overflow-hidden cursor-pointer hover:shadow-xl transition-all duration-300 hover-elevate"
-      onClick={() => {
-        onClick?.();
-        console.log(`Category clicked: ${name}`);
-      }}
+      onClick={onClick}
       data-testid={`card-category-${name.toLowerCase().replace(/\s+/g, "-")}`}
     >
       <div className="relative aspect-[16/9] overflow-hidden">

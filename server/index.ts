@@ -2,11 +2,15 @@ import express, { type Request, Response, NextFunction } from "express";
 import session from "express-session";   // 👈 add this
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import path from "path";
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Serve static assets from attached_assets
+app.use("/assets", express.static(path.resolve(import.meta.dirname, "..", "attached_assets")));
 
 // 👇 Add express-session before routes
 app.use(

@@ -5,9 +5,11 @@ import CategoryCard from "@/components/CategoryCard";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import type { Product as ApiProduct, Category } from "@shared/schema";
+import { useLocation } from "wouter";
 
 export default function Collections() {
   const [cartOpen, setCartOpen] = useState(false);
+  const [, setLocation] = useLocation();
 
   const { data: categories = [] } = useQuery<Category[]>({
     queryKey: ["/api/categories"],
@@ -59,6 +61,7 @@ export default function Collections() {
                     name={category.name}
                     image={category.image}
                     productCount={category.productCount ?? undefined}
+                    onClick={() => setLocation(`/shop?category=${encodeURIComponent(category.name)}`)}
                   />
                 ))}
               </div>
