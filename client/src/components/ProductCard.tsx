@@ -23,6 +23,7 @@ interface ProductCardProps {
 export default function ProductCard({ product, onAddToCart, onToggleWishlist }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   const handleWishlistClick = () => {
     setIsWishlisted(!isWishlisted);
@@ -41,12 +42,21 @@ export default function ProductCard({ product, onAddToCart, onToggleWishlist }: 
       data-testid={`card-product-${product.id}`}
     >
       <div className="relative aspect-[4/5] overflow-hidden bg-muted">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-          data-testid={`img-product-${product.id}`}
-        />
+        {imageError ? (
+          <div className="w-full h-full flex items-center justify-center bg-muted">
+            <div className="text-center">
+              <p className="text-sm text-muted-foreground">Image not available</p>
+            </div>
+          </div>
+        ) : (
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            data-testid={`img-product-${product.id}`}
+            onError={() => setImageError(true)}
+          />
+        )}
 
         {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-2">
