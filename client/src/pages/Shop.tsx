@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/Header";
 import ProductCard, { type Product } from "@/components/ProductCard";
@@ -15,15 +15,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useSearch } from "wouter";
 
 export default function Shop() {
+  const search = useSearch();
+  const urlParams = new URLSearchParams(search);
+  const categoryFromUrl = urlParams.get("category");
+  
   const [cartOpen, setCartOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [selectedCategory, setSelectedCategory] = useState<string>(categoryFromUrl || "all");
   const [sortBy, setSortBy] = useState<string>("featured");
   const { toast } = useToast();
 
+  // Update selected category when URL changes
+  useEffect(() => {
+    if (categoryFromUrl) {
+      setSelectedCategory(categoryFromUrl);
+    }
+  }, [categoryFromUrl]);
+
+  // Build the API URL with category parameter
+  const apiUrl = selectedCategory !== "all" 
+    ? `/api/products?category=${encodeURIComponent(selectedCategory)}`
+    : "/api/products";
+
   const { data: products = [], isLoading: productsLoading } = useQuery<ApiProduct[]>({
-    queryKey: ["/api/products", selectedCategory !== "all" ? { category: selectedCategory } : {}],
+    queryKey: [apiUrl],
   });
 
   const { data: cartItems = [], refetch: refetchCart } = useQuery<Array<{

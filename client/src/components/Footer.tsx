@@ -2,13 +2,14 @@ import { Facebook, Instagram, Twitter, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { Link } from "wouter";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Newsletter signup:", email);
+    // TODO: Implement newsletter signup API
     setEmail("");
   };
 
@@ -33,24 +34,24 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-watches">
+                <Link href="/shop?category=Watches" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-watches">
                   Watches
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-sunglasses">
+                <Link href="/shop?category=Sunglasses" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-sunglasses">
                   Sunglasses
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-accessories">
+                <Link href="/shop?category=Accessories" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-accessories">
                   Accessories
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-new-arrivals">
+                <Link href="/shop" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-new-arrivals">
                   New Arrivals
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -62,24 +63,24 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-contact">
+                <Link href="/contact" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-contact">
                   Contact Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-shipping">
+                <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-shipping">
                   Shipping Info
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-returns">
+                <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-returns">
                   Returns
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-faq">
+                <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-faq">
                   FAQ
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
