@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { useTheme } from "./ThemeProvider";
 import { useState } from "react";
+import { Link } from "wouter";
 
 interface HeaderProps {
   cartItemCount?: number;
@@ -32,41 +33,43 @@ export default function Header({ cartItemCount = 0, onCartClick, onSearchClick }
 
           {/* Logo */}
           <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold tracking-tight" data-testid="text-logo">
-              Yona
-            </h1>
+            <Link href="/">
+              <h1 className="text-2xl font-bold tracking-tight cursor-pointer" data-testid="text-logo">
+                Yona
+              </h1>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6 flex-1 justify-center">
-            <a
-              href="\shop"
+            <Link
+              href="/shop"
               className="text-sm font-medium hover-elevate px-3 py-2 rounded-md transition-colors"
               data-testid="link-shop"
             >
               Shop
-            </a>
-            <a
-              href="\collections"
+            </Link>
+            <Link
+              href="/collections"
               className="text-sm font-medium hover-elevate px-3 py-2 rounded-md transition-colors"
               data-testid="link-collections"
             >
               Collections
-            </a>
-            <a
-              href="\about"
+            </Link>
+            <Link
+              href="/about"
               className="text-sm font-medium hover-elevate px-3 py-2 rounded-md transition-colors"
               data-testid="link-about"
             >
               About
-            </a>
-            <a
-              href="\contact"
+            </Link>
+            <Link
+              href="/contact"
               className="text-sm font-medium hover-elevate px-3 py-2 rounded-md transition-colors"
               data-testid="link-contact"
             >
               Contact
-            </a>
+            </Link>
           </nav>
 
           {/* Search Bar - Desktop */}
@@ -136,34 +139,34 @@ export default function Header({ cartItemCount = 0, onCartClick, onSearchClick }
         {mobileMenuOpen && (
           <nav className="md:hidden py-4 border-t" data-testid="nav-mobile-menu">
             <div className="flex flex-col gap-2">
-              <a
-                href="\shop"
+              <Link
+                href="/shop"
                 className="text-sm font-medium hover-elevate px-3 py-2 rounded-md"
                 data-testid="link-shop-mobile"
               >
                 Shop
-              </a>
-              <a
-                href="\collections"
+              </Link>
+              <Link
+                href="/collections"
                 className="text-sm font-medium hover-elevate px-3 py-2 rounded-md"
                 data-testid="link-collections-mobile"
               >
                 Collections
-              </a>
-              <a
-                href="\about"
+              </Link>
+              <Link
+                href="/about"
                 className="text-sm font-medium hover-elevate px-3 py-2 rounded-md"
                 data-testid="link-about-mobile"
               >
                 About
-              </a>
-              <a
-                href="\contact"
+              </Link>
+              <Link
+                href="/contact"
                 className="text-sm font-medium hover-elevate px-3 py-2 rounded-md"
                 data-testid="link-contact-mobile"
               >
                 Contact
-              </a>
+              </Link>
             </div>
           </nav>
         )}
