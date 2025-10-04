@@ -33,9 +33,11 @@ export default function Header({ cartItemCount = 0, onCartClick, onSearchClick }
 
           {/* Logo */}
           <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold tracking-tight" data-testid="text-logo">
-              Yona
-            </h1>
+            <Link href="/">
+              <h1 className="text-2xl font-bold tracking-tight cursor-pointer" data-testid="text-logo">
+                Yona
+              </h1>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
