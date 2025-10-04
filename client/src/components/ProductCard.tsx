@@ -27,12 +27,10 @@ export default function ProductCard({ product, onAddToCart, onToggleWishlist }: 
   const handleWishlistClick = () => {
     setIsWishlisted(!isWishlisted);
     onToggleWishlist?.(product.id);
-    console.log(`Wishlist toggled for ${product.name}`);
   };
 
   const handleAddToCart = () => {
     onAddToCart?.(product);
-    console.log(`Added ${product.name} to cart`);
   };
 
   return (

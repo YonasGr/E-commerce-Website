@@ -34,8 +34,13 @@ export default function Shop() {
     }
   }, [categoryFromUrl]);
 
+  // Build the API URL with category parameter
+  const apiUrl = selectedCategory !== "all" 
+    ? `/api/products?category=${encodeURIComponent(selectedCategory)}`
+    : "/api/products";
+
   const { data: products = [], isLoading: productsLoading } = useQuery<ApiProduct[]>({
-    queryKey: ["/api/products", selectedCategory !== "all" ? { category: selectedCategory } : {}],
+    queryKey: [apiUrl],
   });
 
   const { data: cartItems = [], refetch: refetchCart } = useQuery<Array<{

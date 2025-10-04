@@ -9,7 +9,7 @@ export default function Footer() {
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Newsletter signup:", email);
+    // TODO: Implement newsletter signup API
     setEmail("");
   };
 
@@ -34,31 +34,23 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/shop?category=Watches">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-watches">
-                    Watches
-                  </a>
+                <Link href="/shop?category=Watches" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-watches">
+                  Watches
                 </Link>
               </li>
               <li>
-                <Link href="/shop?category=Sunglasses">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-sunglasses">
-                    Sunglasses
-                  </a>
+                <Link href="/shop?category=Sunglasses" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-sunglasses">
+                  Sunglasses
                 </Link>
               </li>
               <li>
-                <Link href="/shop?category=Accessories">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-accessories">
-                    Accessories
-                  </a>
+                <Link href="/shop?category=Accessories" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-accessories">
+                  Accessories
                 </Link>
               </li>
               <li>
-                <Link href="/shop">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-new-arrivals">
-                    New Arrivals
-                  </a>
+                <Link href="/shop" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-new-arrivals">
+                  New Arrivals
                 </Link>
               </li>
             </ul>
@@ -71,31 +63,23 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/contact">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-contact">
-                    Contact Us
-                  </a>
+                <Link href="/contact" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-contact">
+                  Contact Us
                 </Link>
               </li>
               <li>
-                <Link href="/about">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-shipping">
-                    Shipping Info
-                  </a>
+                <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-shipping">
+                  Shipping Info
                 </Link>
               </li>
               <li>
-                <Link href="/about">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-returns">
-                    Returns
-                  </a>
+                <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-returns">
+                  Returns
                 </Link>
               </li>
               <li>
-                <Link href="/about">
-                  <a className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-faq">
-                    FAQ
-                  </a>
+                <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-faq">
+                  FAQ
                 </Link>
               </li>
             </ul>
